@@ -249,6 +249,10 @@ class IntlPhoneField extends StatefulWidget {
   /// If null, default magnification configuration will be used.
   final TextMagnifierConfiguration? magnifierConfiguration;
 
+  final bool useRootNavigatorCountriesDialog;
+
+  final BoxDecoration? flagDecoration;
+
   const IntlPhoneField({
     Key? key,
     this.formFieldKey,
@@ -296,6 +300,8 @@ class IntlPhoneField extends StatefulWidget {
     this.pickerDialogStyle,
     this.flagsButtonMargin = EdgeInsets.zero,
     this.magnifierConfiguration,
+    this.useRootNavigatorCountriesDialog = false,
+    this.flagDecoration,
   }) : super(key: key);
 
   @override
@@ -359,7 +365,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
     filteredCountries = _countryList;
     await showDialog(
       context: context,
-      useRootNavigator: false,
+      useRootNavigator: widget.useRootNavigatorCountriesDialog,
       builder: (context) => StatefulBuilder(
         builder: (ctx, setState) => CountryPickerDialog(
           languageCode: widget.languageCode.toLowerCase(),
@@ -477,9 +483,12 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
                           package: 'intl_phone_field',
                           width: 32,
                         )
-                      : Text(
-                          _selectedCountry.flag,
-                          style: const TextStyle(fontSize: 18),
+                      : DecoratedBox(
+                          decoration: widget.flagDecoration ?? BoxDecoration(),
+                          child: Text(
+                            _selectedCountry.flag,
+                            style: const TextStyle(fontSize: 18),
+                          ),
                         ),
                   const SizedBox(width: 8),
                 ],
