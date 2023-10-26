@@ -377,6 +377,13 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
           onCountryChanged: (Country country) {
             _selectedCountry = country;
             widget.onCountryChanged?.call(country);
+            widget.onChanged?.call(
+              PhoneNumber(
+                countryISOCode: _selectedCountry.code,
+                countryCode: '+${_selectedCountry.dialCode}${_selectedCountry.regionCode}',
+                number: widget.controller?.text ?? widget.initialValue ?? '',
+              ),
+            );
             setState(() {});
           },
         ),
