@@ -253,6 +253,9 @@ class IntlPhoneField extends StatefulWidget {
 
   final BoxDecoration? flagDecoration;
 
+  /// Disables the country selection.
+  final bool disableCountrySelect;
+
   const IntlPhoneField({
     Key? key,
     this.formFieldKey,
@@ -302,6 +305,7 @@ class IntlPhoneField extends StatefulWidget {
     this.magnifierConfiguration,
     this.useRootNavigatorCountriesDialog = false,
     this.flagDecoration,
+    this.disableCountrySelect = false,
   }) : super(key: key);
 
   @override
@@ -467,7 +471,7 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
         decoration: widget.dropdownDecoration,
         child: InkWell(
           borderRadius: widget.dropdownDecoration.borderRadius as BorderRadius?,
-          onTap: widget.enabled ? _changeCountry : null,
+          onTap: widget.enabled && !widget.disableCountrySelect ? _changeCountry : null,
           child: Padding(
             padding: widget.flagsButtonPadding,
             child: Row(
